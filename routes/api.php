@@ -20,4 +20,5 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile', [AuthController::class, 'profile']);
+    Route::get('userlist', [AuthController::class, 'userlist']);
 });

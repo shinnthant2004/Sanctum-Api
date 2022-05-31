@@ -29,7 +29,7 @@ class AuthController extends Controller
     {
         if (Auth::attempt(['email' => request()->email, 'password' => request()->password])) {
             $user = auth()->user();
-            $token = $user->createToken('testing');
+            $token = $user->createToken('testing', ['admin']);
             return response()->json([
                 'status' => 200,
                 'message' => 'successfully Registered',
@@ -44,6 +44,21 @@ class AuthController extends Controller
             'status' => 200,
             'message' => 'success',
             'data' => $user
+        ]);
+    }
+    public function userlist()
+    {
+        if (!auth()->user()->tokenCan('admin')) {
+            return response()->json([
+                'status' => 403,
+                'message' => 'unauthorized',
+            ]);
+        }
+        $users = User::all();
+        return response()->json([
+            'status' => 200,
+            'message' => 'success',
+            'data' => $users
         ]);
     }
 }
