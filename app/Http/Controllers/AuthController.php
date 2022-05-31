@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use function PHPUnit\Framework\at;
+
 class AuthController extends Controller
 {
     public function register()
@@ -34,5 +36,14 @@ class AuthController extends Controller
                 'token' => $token->plainTextToken
             ]);
         }
+    }
+    public function profile()
+    {
+        $user = Auth::user();
+        return response()->json([
+            'status' => 200,
+            'message' => 'success',
+            'data' => $user
+        ]);
     }
 }
